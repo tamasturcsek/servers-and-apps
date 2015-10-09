@@ -65,4 +65,32 @@ public class RetrieveUserAttributes {
         return user;
     }
 
+    public boolean isUserExist(String username, String password) {
+        LdapContext ctx = getLdapContext()
+        try {
+            SearchControls constraints = new SearchControls()
+            constraints.setSearchScope(SearchControls.SUBTREE_SCOPE)
+            String[] attrIDs = { "userPrincipalName"; "userPassword" }
+            constraints.setReturningAttributes(attrIDs)
+            NamingEnumeration answer = ctx.search("DC=YourDomain,DC=com", "userPrincipalName="
+                    + username, constraints)
+            if (answer.hasMore()) {
+                Attributes attrs = ((SearchResult) answer.next()).getAttributes()
+                System.out.println("userPrincipalName " + attrs.get("userPrincipalName"))
+                System.out.println("userPassword " + attrs.get("userPassword"))
+                if (attrs.get("userPassword")) {
+                    throw new Exception("Invalid password");
+                    return false
+                }
+            } else {
+                throw new Exception("Invalid User");
+                return false
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return true
+    }
+
 }
