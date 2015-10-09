@@ -1,0 +1,37 @@
+td.checkbox .v-table-caption-container .v-table-checkbox-container{
+    vertical-align: top;
+    padding-right: 2px;
+}
+td.checkbox .v-table-caption-container .v-table-checkbox-container .v-header-checkbox{
+    margin: 0px;
+    vertical-align: top;
+    padding: 0px;
+}
+td.radio .v-table-caption-container .v-table-checkbox-container{
+    vertical-align: top;
+    padding-right: 2px;
+}
+td.radio .v-table-caption-container .v-table-checkbox-container .v-header-radio{
+    margin: 0px;
+    vertical-align: top;
+    padding: 0px;
+}
+.v-table-eicon{
+    background: none;
+    width: 0px;
+    height:20px;
+    float: right;
+}
+
+td .v-table-eicon-expanded{
+    background: url('expanded.png') no-repeat right center; 
+    width: 15px;
+    height:18px;
+    float: right;
+}
+td .v-table-eicon-collapsed{
+    background: url('collapsed.png') no-repeat right center;
+    width: 15px;
+    height:18px;
+    float: right;
+}
