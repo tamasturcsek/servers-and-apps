@@ -9,7 +9,6 @@ class SAAApplication {
 
     static void main(String[] args) {
         RetrieveUserAttributes retrieveUserAttributes = new RetrieveUserAttributes()
-        retrieveUserAttributes.getUserBasicAttributes("testuser", retrieveUserAttributes.getLdapContext())
         SpringApplication.run SAAApplication, args
     }
 }

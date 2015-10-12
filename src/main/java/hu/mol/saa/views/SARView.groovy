@@ -6,11 +6,13 @@ import com.vaadin.event.ShortcutAction
 import com.vaadin.event.ShortcutListener
 import com.vaadin.navigator.View
 import com.vaadin.navigator.ViewChangeListener
+import com.vaadin.server.VaadinSession
 import com.vaadin.ui.*
 import com.vaadin.ui.themes.ValoTheme
 import hu.mol.saa.Application
 import hu.mol.saa.CExtFilterTable
 import hu.mol.saa.CFieldGroup
+import hu.mol.saa.Logging
 import hu.mol.saa.SAAUI
 import hu.mol.saa.SAR
 import hu.mol.saa.Server
@@ -180,6 +182,7 @@ class SARView extends VerticalLayout implements View {
                     sarRepo.save(s)
                     fieldGroup.setItemDataSource(new SAR())
                     fieldGroup.bindMemberFields(this)
+                    Logging.addRelation(VaadinSession.getCurrent().getAttribute("username"),"" + appsBox.getValue() + " @ " + serversBox.getValue())
                 } else {
                     Notification.show("Relation already exist", Notification.Type.WARNING_MESSAGE)
                 }
@@ -233,6 +236,7 @@ class SARView extends VerticalLayout implements View {
         for (VSAR o : selectedRecords)
             try {
                 sarRepo.delete(o.id)
+                Logging.removeRelation(VaadinSession.getCurrent().getAttribute("username"),o.toString())
             } catch (EmptyResultDataAccessException e) {}
         refreshTable()
     }

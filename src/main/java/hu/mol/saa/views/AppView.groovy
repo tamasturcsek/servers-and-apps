@@ -6,11 +6,13 @@ import com.vaadin.event.ShortcutAction
 import com.vaadin.event.ShortcutListener
 import com.vaadin.navigator.View
 import com.vaadin.navigator.ViewChangeListener
+import com.vaadin.server.VaadinSession
 import com.vaadin.ui.*
 import com.vaadin.ui.themes.ValoTheme
 import hu.mol.saa.Application
 import hu.mol.saa.CExtFilterTable
 import hu.mol.saa.CFieldGroup
+import hu.mol.saa.Logging
 import hu.mol.saa.SAAUI
 import hu.mol.saa.repos.ApplicationRepo
 import hu.mol.saa.security.Authentication
@@ -163,6 +165,7 @@ class AppView extends CustomComponent implements View {
                 appRepo.save(app)
                 fieldGroup.setItemDataSource(new Application())
                 fieldGroup.bindMemberFields(this)
+                Logging.addApp(VaadinSession.getCurrent().getAttribute("username"),app.toString())
             } else {
                 Notification.show("Application already exist", Notification.Type.WARNING_MESSAGE)
             }
@@ -214,6 +217,7 @@ class AppView extends CustomComponent implements View {
         for (Application o : selectedRecords)
             try {
                 appRepo.delete(o.applicationID)
+                Logging.removeApp(VaadinSession.getCurrent().getAttribute("username"),o.toString())
             } catch (org.springframework.dao.DataIntegrityViolationException e) {
                 //vagy egy listába az összeset és 1 értesítés..
                 Notification.show("Cannot delete " + o.applicationname, "The selected application is assigned to server", Notification.Type.ERROR_MESSAGE)
