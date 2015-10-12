@@ -65,7 +65,7 @@ public class RetrieveUserAttributes {
         return user;
     }
 
-    public boolean isUserExist(String username, String password) {
+    public boolean isUserAndPasswordValid(String username, String password) {
         LdapContext ctx = getLdapContext()
         try {
             SearchControls constraints = new SearchControls()
@@ -78,7 +78,7 @@ public class RetrieveUserAttributes {
                 Attributes attrs = ((SearchResult) answer.next()).getAttributes()
                 System.out.println("userPrincipalName " + attrs.get("userPrincipalName"))
                 System.out.println("userPassword " + attrs.get("userPassword"))
-                if (attrs.get("userPassword")) {
+                if (!(password.equals(attrs.get("userPassword")))) {
                     throw new Exception("Invalid password");
                     return false
                 }
